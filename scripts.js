@@ -19,7 +19,7 @@ function renderList() {
                 <span>${todo.name}</span>
                 <div>
                     <button class="edit-button" onclick="editTask(${index})">Edit</button>
-                    <button class="delete-button" onclick="deleteTask(${index})">Delete</button>
+                    <button class="delete-button" onclick="deleteTodo(${index})">Delete</button>
                 </div>
             `;
 			todoListElement.appendChild(li);
