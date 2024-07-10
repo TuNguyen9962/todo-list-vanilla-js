@@ -33,5 +33,16 @@ function deleteTodo(index) {
 	renderList();
 }
 
+function checkTodo(index) {
+	if (todoList[index].isDone === true) {
+		todoList[index].isDone = false
+		renderList();
+	}
+	else {
+		todoList[index].isDone = true
+		renderList();
+	}
+
+}
 
 renderList();
