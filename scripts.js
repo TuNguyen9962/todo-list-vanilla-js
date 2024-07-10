@@ -27,4 +27,11 @@ function renderList() {
 	});
 }
 
+function deleteTodo(index) {
+	//danh sách bắt đầu từ vị trí số 0
+	todoList.splice(index, 1)
+	renderList();
+}
+
+
 renderList();
