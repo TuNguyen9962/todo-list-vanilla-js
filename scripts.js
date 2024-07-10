@@ -15,13 +15,26 @@ function renderList() {
 			(filterValue === "undone" && !todo.done)
 		) {
 			const li = document.createElement("li");
-			li.innerHTML = `
+			if (todoList[index].isDone === true) {
+				li.innerHTML = `
+				<input type="checkbox" onchange="checkTodo(${index})" checked>
                 <span>${todo.name}</span>
                 <div>
                     <button class="edit-button" onclick="editTask(${index})">Edit</button>
                     <button class="delete-button" onclick="deleteTodo(${index})">Delete</button>
                 </div>
             `;
+			}
+			else
+			{
+				li.innerHTML = `
+				<input type="checkbox" onchange="checkTodo(${index})" >
+                <span>${todo.name}</span>
+                <div>
+                    <button class="edit-button" onclick="editTask(${index})">Edit</button>
+                    <button class="delete-button" onclick="deleteTodo(${index})">Delete</button>
+                </div>
+            `;}
 			todoListElement.appendChild(li);
 		}
 	});
