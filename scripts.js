@@ -3,7 +3,39 @@ todoList = [
 	{ name: "Todo 2", isDone: false },
 ];
 
+let editingIndex = -1
+
+const todoNameInput = document.getElementById("taskName");
+const addTodoButton = document.getElementById("addTask");
+const cancelEditButton = document.getElementById("cancelEdit")
+
 const todoListElement = document.getElementById("todoList");
+
+addTodoButton.addEventListener("click", addOrEditTodo);
+cancelEditButton.addEventListener("click", cancelEdit);
+function addOrEditTodo(){
+	const taskName = todoNameInput.value.trim();
+	if (taskName) {
+		if (editingIndex === -1) {
+			todoList.push({ name: taskName, isDone: false });
+		} else {
+			todoList[editingIndex].name = taskName;
+			editingIndex = -1;
+			addTodoButton.textContent = "Add";
+			cancelEditButton.style.display = "none";
+		}
+		todoNameInput.value = "";
+		renderList();
+	}
+}
+
+function cancelEdit() {
+	todoNameInput.value = "";
+	editingIndex = -1;
+	addTodoButton.textContent = "Add";
+	cancelEditButton.style.display = "none";
+}
+
 
 function renderList() {
 	const filterValue = filter.value;
@@ -18,13 +50,20 @@ function renderList() {
 			li.innerHTML = `
                 <span>${todo.name}</span>
                 <div>
-                    <button class="edit-button" onclick="editTask(${index})">Edit</button>
+                    <button class="edit-button" onclick="editTodo(${index})">Edit</button>
                     <button class="delete-button" onclick="deleteTodo(${index})">Delete</button>
                 </div>
             `;
 			todoListElement.appendChild(li);
 		}
 	});
+}
+
+function editTodo(index) {
+	todoNameInput.value = todoList[index].name;
+	editingIndex = index;
+	addTodoButton.textContent = "Save";
+	cancelEditButton.style.display = "inline";
 }
 
 function deleteTodo(index) {
