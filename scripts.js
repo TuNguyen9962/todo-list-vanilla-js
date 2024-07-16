@@ -1,25 +1,27 @@
-todoList = [
-	{ name: "Todo 1", isDone: false },
+todoListData = [
+	{ name: "Todo 1", isDone: true },
 	{ name: "Todo 2", isDone: false },
 ];
 
-let editingIndex = -1
+let editingIndex = -1;
 
-const todoNameInput = document.getElementById("taskName");
-const addTodoButton = document.getElementById("addTask");
-const cancelEditButton = document.getElementById("cancelEdit")
+const todoNameInput = document.getElementById("task-name");
+const addTodoButton = document.getElementById("add-task-button");
+const cancelEditButton = document.getElementById("cancel-edit-button");
+const filterInput = document.getElementById("filter-input");
 
-const todoListElement = document.getElementById("todoList");
+const todoList = document.getElementById("todo-list");
 
 addTodoButton.addEventListener("click", addOrEditTodo);
 cancelEditButton.addEventListener("click", cancelEdit);
-function addOrEditTodo(){
+
+function addOrEditTodo() {
 	const taskName = todoNameInput.value.trim();
 	if (taskName) {
 		if (editingIndex === -1) {
-			todoList.push({ name: taskName, isDone: false });
+			todoListData.push({ name: taskName, isDone: false });
 		} else {
-			todoList[editingIndex].name = taskName;
+			todoListData[editingIndex].name = taskName;
 			editingIndex = -1;
 			addTodoButton.textContent = "Add";
 			cancelEditButton.style.display = "none";
@@ -36,44 +38,47 @@ function cancelEdit() {
 	cancelEditButton.style.display = "none";
 }
 
-
 function renderList() {
-	const filterValue = filter.value;
-	todoListElement.innerHTML = "";
-	todoList.forEach((todo, index) => {
+	const filterValue = filterInput.value;
+
+	todoList.innerHTML = "";
+
+	todoListData.forEach((todo, index) => {
 		if (
 			filterValue === "all" ||
-			(filterValue === "done" && todo.done) ||
-			(filterValue === "undone" && !todo.done)
+			(filterValue === "done" && todo.isDone) ||
+			(filterValue === "undone" && !todo.isDone)
 		) {
 			const li = document.createElement("li");
-			if (todoList[index].isDone === true) {
+			if (todoListData[index].isDone === true) {
 				li.innerHTML = `
-				<input type="checkbox" onchange="checkTodo(${index})" checked>
-                <span>${todo.name}</span>
-                <div>
-                    <button class="edit-button" onclick="editTodo(${index})">Edit</button>
-                    <button class="delete-button" onclick="deleteTodo(${index})">Delete</button>
-                </div>
-            `;
+                        <input type="checkbox" onchange="checkTodo(${index})" checked>
+                        <span>${todo.name}</span>
+                        <div>
+                            <button class="edit-button" onclick="editTodo(${index})">Edit</button>
+                            <button class="delete-button" onclick="deleteTodo(${index})">Delete</button>
+                        </div>
+                    `;
+			} else {
+				li.innerHTML = `
+					<input type="checkbox" onchange="checkTodo(${index})" >
+	                <span>${todo.name}</span>
+	                <div>
+	                    <button class="edit-button" onclick="editTask(${index})">Edit</button>
+	                    <button class="delete-button" onclick="deleteTodo(${index})">Delete</button>
+	                </div>
+	            `;
 			}
-			else
-			{
-				li.innerHTML = `
-				<input type="checkbox" onchange="checkTodo(${index})" >
-                <span>${todo.name}</span>
-                <div>
-                    <button class="edit-button" onclick="editTask(${index})">Edit</button>
-                    <button class="delete-button" onclick="deleteTodo(${index})">Delete</button>
-                </div>
-            `;}
-			todoListElement.appendChild(li);
+
+			todoList.appendChild(li);
 		}
 	});
 }
 
+filterInput.addEventListener("change", renderList);
+
 function editTodo(index) {
-	todoNameInput.value = todoList[index].name;
+	todoNameInput.value = todoListData[index].name;
 	editingIndex = index;
 	addTodoButton.textContent = "Save";
 	cancelEditButton.style.display = "inline";
@@ -81,20 +86,18 @@ function editTodo(index) {
 
 function deleteTodo(index) {
 	//danh sách bắt đầu từ vị trí số 0
-	todoList.splice(index, 1)
+	todoListData.splice(index, 1);
 	renderList();
 }
 
 function checkTodo(index) {
-	if (todoList[index].isDone === true) {
-		todoList[index].isDone = false
+	if (todoListData[index].isDone === true) {
+		todoListData[index].isDone = false;
+		renderList();
+	} else {
+		todoListData[index].isDone = true;
 		renderList();
 	}
-	else {
-		todoList[index].isDone = true
-		renderList();
-	}
-
 }
 
 renderList();
