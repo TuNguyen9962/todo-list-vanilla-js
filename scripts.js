@@ -31,6 +31,7 @@ function addOrEditTodo() {
 	}
 }
 
+
 function cancelEdit() {
 	todoNameInput.value = "";
 	editingIndex = -1;
@@ -64,7 +65,7 @@ function renderList() {
 					<input type="checkbox" onchange="checkTodo(${index})" >
 	                <span>${todo.name}</span>
 	                <div>
-	                    <button class="edit-button" onclick="editTask(${index})">Edit</button>
+	                    <button class="edit-button" onclick="editTodo(${index})">Edit</button>
 	                    <button class="delete-button" onclick="deleteTodo(${index})">Delete</button>
 	                </div>
 	            `;
