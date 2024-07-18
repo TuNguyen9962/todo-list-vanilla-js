@@ -71,3 +71,24 @@ li {
 .delete:hover {
 	background-color: #45a049;
 }
+
+span {
+	margin: 5px;
+	max-width: 40%;
+	width: 100%;
+	text-align: left;
+}
+
+button {
+	margin: 2px;
+	display: inline-block;
+}
+
+#task-name {
+	margin: 2px;
+	
+}
+
+.area-button {
+	display: inline-block;
+}

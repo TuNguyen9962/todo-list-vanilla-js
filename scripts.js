@@ -1,6 +1,7 @@
 todoListData = [
 	{ name: "Todo 1", isDone: true },
 	{ name: "Todo 2", isDone: false },
+	{ name: "Làm bài tập về nhà nhứ 3 trong tuần", isDone: false },
 ];
 
 let editingIndex = -1;
@@ -55,7 +56,7 @@ function renderList() {
 				li.innerHTML = `
                         <input type="checkbox" onchange="checkTodo(${index})" checked>
                         <span>${todo.name}</span>
-                        <div>
+                        <div class="area-button">
                             <button class="edit-button" onclick="editTodo(${index})">Edit</button>
                             <button class="delete-button" onclick="deleteTodo(${index})">Delete</button>
                         </div>
