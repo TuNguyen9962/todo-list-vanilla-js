@@ -1,4 +1,4 @@
-todoListData = [
+var todoListData = [
 	{ name: "Todo 1", isDone: true },
 	{ name: "Todo 2", isDone: false },
 	{ name: "Làm bài tập về nhà nhứ 3 trong tuần", isDone: false },
