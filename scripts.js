@@ -18,28 +18,28 @@ function TodoApp() {
   this.renderList();
 }
 
-function addOrEditTodo() {
-  const taskName = todoNameInput.value.trim();
+TodoApp.prototype.addOrEditTodo = function () {
+  const taskName = this.todoNameInput.value.trim();
   if (taskName) {
-    if (editingIndex === -1) {
-      todoListData.push({ name: taskName, isDone: false });
+    if (this.editingIndex === -1) {
+      this.todoListData.push({ name: taskName, isDone: false });
     } else {
-      todoListData[editingIndex].name = taskName;
-      editingIndex = -1;
-      addTodoButton.textContent = 'Add';
-      cancelEditButton.style.display = 'none';
+      this.todoListData[this.editingIndex].name = taskName;
+      this.editingIndex = -1;
+      this.addTodoButton.textContent = 'Add';
+      this.cancelEditButton.style.display = 'none';
     }
-    todoNameInput.value = '';
-    renderList();
+    this.todoNameInput.value = '';
+    this.renderList();
   }
-}
+};
 
-function cancelEdit() {
-  todoNameInput.value = '';
-  editingIndex = -1;
-  addTodoButton.textContent = 'Add';
-  cancelEditButton.style.display = 'none';
-}
+TodoApp.prototype.cancelEdit = function () {
+  this.todoNameInput.value = '';
+  this.editingIndex = -1;
+  this.addTodoButton.textContent = 'Add';
+  this.cancelEditButton.style.display = 'none';
+};
 
 TodoApp.prototype.renderList = function () {
   const filterValue = this.filterInput.value;
@@ -67,21 +67,21 @@ TodoApp.prototype.renderList = function () {
   });
 };
 
-function editTodo(index) {
-  todoNameInput.value = todoListData[index].name;
-  editingIndex = index;
-  addTodoButton.textContent = 'Save';
-  cancelEditButton.style.display = 'inline';
-}
+TodoApp.prototype.editTodo = function (index) {
+  this.todoNameInput.value = this.todoListData[index].name;
+  this.editingIndex = index;
+  this.addTodoButton.textContent = 'Save';
+  this.cancelEditButton.style.display = 'inline';
+};
 
 TodoApp.prototype.deleteTodo = function (index) {
-	this.todoListData.splice(index, 1);
-	this.renderList();
-  };
-  
-  TodoApp.prototype.checkTodo = function (index) {
-	this.todoListData[index].isDone = !this.todoListData[index].isDone;
-	this.renderList();
-  };
-  
-  const app = new TodoApp();
+  this.todoListData.splice(index, 1);
+  this.renderList();
+};
+
+TodoApp.prototype.checkTodo = function (index) {
+  this.todoListData[index].isDone = !this.todoListData[index].isDone;
+  this.renderList();
+};
+
+const app = new TodoApp();
