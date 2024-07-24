@@ -74,20 +74,14 @@ function editTodo(index) {
   cancelEditButton.style.display = 'inline';
 }
 
-function deleteTodo(index) {
-  //danh sách bắt đầu từ vị trí số 0
-  todoListData.splice(index, 1);
-  renderList();
-}
-
-function checkTodo(index) {
-  if (todoListData[index].isDone === true) {
-    todoListData[index].isDone = false;
-    renderList();
-  } else {
-    todoListData[index].isDone = true;
-    renderList();
-  }
-}
-
-renderList();
+TodoApp.prototype.deleteTodo = function (index) {
+	this.todoListData.splice(index, 1);
+	this.renderList();
+  };
+  
+  TodoApp.prototype.checkTodo = function (index) {
+	this.todoListData[index].isDone = !this.todoListData[index].isDone;
+	this.renderList();
+  };
+  
+  const app = new TodoApp();
