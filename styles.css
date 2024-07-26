@@ -92,3 +92,37 @@ button {
 .area-button {
 	display: inline-block;
 }
+
+input{
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	flex: 1;
+}
+.header-input {
+	margin-bottom: 2px;
+}
+
+.input{
+	display: flex;
+}
+
+button.button-register{
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	flex: 1;
+	background-color: #4caf50;
+	color: white;
+	
+}
+button.button-login{
+	margin-top: 18px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	flex: 1;
+	background-color: #4caf50;
+	color: white;
+	
+}
