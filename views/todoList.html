@@ -9,9 +9,9 @@
 
 <body>
     <div class="container">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2 style="display: inline-block;">Todo List</h2>
-            <button style="height: fit-content; background-color: red;" id="logout" onclick="app.logout()">Logout</button>
+        <div class="header">
+            <h2 class="header-todo">Todo List</h2>
+            <button class="button-logout" id="logout" onclick="app.logout()">Logout</button>
         </div>
         <div class="input-container">
             <input type="text" id="task-name" placeholder="Task name...">
@@ -28,10 +28,9 @@
             </select>
         </div>
     </div>
-    
+
     <script src="../controllers/todoManagament.js"></script>
 
 </body>
 
 </html>
-
