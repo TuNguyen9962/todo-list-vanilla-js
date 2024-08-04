@@ -10,14 +10,20 @@ function TodoApp() {
   this.cancelEditButton = document.getElementById('cancel-edit-button');
   this.filterInput = document.getElementById('filter-input');
   this.todoList = document.getElementById('todo-list');
-
+ 
   this.addTodoButton.addEventListener('click', this.addOrEditTodo.bind(this));
   this.cancelEditButton.addEventListener('click', this.cancelEdit.bind(this));
   this.filterInput.addEventListener('change', this.renderList.bind(this));
+  
 
   this.renderList();
 }
-
+TodoApp.prototype.logout = function () {
+  localStorage.removeItem('loggedInUser');
+  console.log("hi")
+  this.renderList();
+};
+  
 TodoApp.prototype.addOrEditTodo = function () {
   const storedUser = localStorage.getItem('loggedInUser');
   const user = JSON.parse(storedUser);
