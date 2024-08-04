@@ -9,9 +9,15 @@ function Login() {
     this.loginButton = document.getElementById('login');
   
     this.loginButton.addEventListener('click', this.login.bind(this));
-    
-  }
+    this.checkLogin();
+  };
   
+  Login.prototype.checkLogin = function () {
+    const storedUser = localStorage.getItem('loggedInUser');
+    if (storedUser) {
+        window.location.href = './views/todoList.html';
+    }
+  };
   Login.prototype.login = function () {
 
     localStorage.setItem('accountData',JSON.stringify(this.accountData));
