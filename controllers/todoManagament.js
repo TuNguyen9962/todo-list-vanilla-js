@@ -1,8 +1,8 @@
 function TodoApp() {
   this.todoListData = [
-    { name: 'Todo 1', isDone: true },
-    { name: 'Todo 2', isDone: false },
-    { name: 'Làm bài tập về nhà nhứ 3 trong tuần', isDone: false },
+    { userId: 1, name: 'Todo 1', isDone: true },
+    { userId: 2, name: 'Todo 2', isDone: false },
+    { userId: 1, name: 'Làm bài tập về nhà nhứ 3 trong tuần', isDone: false },
   ];
   this.editingIndex = -1;
   this.todoNameInput = document.getElementById('task-name');
@@ -19,10 +19,15 @@ function TodoApp() {
 }
 
 TodoApp.prototype.addOrEditTodo = function () {
+  const storedUser = localStorage.getItem('loggedInUser');
+  const user = JSON.parse(storedUser);
+  const userID = parseInt(user.useId, 10);
+
   const taskName = this.todoNameInput.value.trim();
   if (taskName) {
     if (this.editingIndex === -1) {
-      this.todoListData.push({ name: taskName, isDone: false });
+      this.todoListData.push({ userId: userID, name: taskName, isDone: false });
+
     } else {
       this.todoListData[this.editingIndex].name = taskName;
       this.editingIndex = -1;
@@ -30,6 +35,7 @@ TodoApp.prototype.addOrEditTodo = function () {
       this.cancelEditButton.style.display = 'none';
     }
     this.todoNameInput.value = '';
+    localStorage.setItem('todoList', JSON.stringify(this.todoListData));
     this.renderList();
   }
 };
@@ -42,29 +48,47 @@ TodoApp.prototype.cancelEdit = function () {
 };
 
 TodoApp.prototype.renderList = function () {
-  const filterValue = this.filterInput.value;
-  this.todoList.innerHTML = '';
+  const storedUser = localStorage.getItem('loggedInUser');
+  const todoList = localStorage.getItem('todoList')
 
-  this.todoListData.forEach((todo, index) => {
-    if (
-      filterValue === 'all' ||
-      (filterValue === 'done' && todo.isDone) ||
-      (filterValue === 'undone' && !todo.isDone)
-    ) {
-      const li = document.createElement('li');
-      li.innerHTML = `
-<input type="checkbox" onchange="app.checkTodo(${index})" ${
-        todo.isDone ? 'checked' : ''
-      }>
-<span>${todo.name}</span>
-<div class="area-button">
-<button class="edit-button" onclick="app.editTodo(${index})">Edit</button>
-<button class="delete-button" onclick="app.deleteTodo(${index})">Delete</button>
-</div>
-`;
-      this.todoList.appendChild(li);
+  if (storedUser) {
+    // Lấy dữ liệu từ localStorage
+    if (todoList) {
+      this.todoListData = JSON.parse(todoList)
     }
-  });
+    const user = JSON.parse(storedUser);
+    const userID = parseInt(user.useId, 10);
+
+    const filterValue = this.filterInput.value;
+
+    // lọc todo theo người dùng
+    const todoUserList = this.todoListData.filter(todo => todo.userId === userID);
+
+    this.todoList.innerHTML = '';
+    todoUserList.forEach((todo, index) => {
+      if (
+        filterValue === 'all' ||
+        (filterValue === 'done' && todo.isDone) ||
+        (filterValue === 'undone' && !todo.isDone)
+      ) {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <input type="checkbox" onchange="app.checkTodo(${index})" ${todo.isDone ? 'checked' : ''
+          }>
+          <span>${todo.name}</span>
+          <div class="area-button">
+          <button class="edit-button" onclick="app.editTodo(${index})">Edit</button>
+          <button class="delete-button" onclick="app.deleteTodo(${index})">Delete</button>
+          </div>
+          `;
+        this.todoList.appendChild(li);
+      }
+    });
+  } else {
+    // Chuyển màn hình tới login
+    window.location.href = '../index.html';
+  }
+
 };
 
 TodoApp.prototype.editTodo = function (index) {

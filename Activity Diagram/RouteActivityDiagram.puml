@@ -1,0 +1,56 @@
+@startuml "Activity diagram"
+title Router & Controller process
+|User|
+start
+:Request;
+|Router|
+:Check pathname;
+if (exist?) then (no)
+    |Router|
+    :Send error 404 Not Found;
+else (yes)
+    |Router|
+    
+    :Check method;
+    if (Valid?) then (No)
+        :Send error 405 Method Not Allowed;
+        |User|
+    else (Yes)
+        |Router|
+        :Send request to Controller;
+        |Controller|
+        :Processing|
+        :Send response;
+        |Router|
+        :Receive response from controller;
+        :Send response;
+        |User|
+    endif
+endif
+:Receive response from router;
+stop
+
+@enduml
+
+@startuml "Activity diagram"
+title Controller - Update task
+|User|
+start
+:request;
+|Router|
+:Handle request from user;
+:Send request to controller;
+|Controller|
+:Check input valid;
+if (Content field not null) then (yes)
+    if(type of content field is string and \n type of check done field is bool) then (yes)
+        if(Content Content field changed) then (yes)
+        :Update content;
+        :Send sucess
+endif
+:Send response to Router;
+|Router|
+:Send response to user;
+stop
+
+@enduml
