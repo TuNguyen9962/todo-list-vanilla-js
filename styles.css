@@ -86,37 +86,39 @@ button {
 
 #task-name {
 	margin: 2px;
-	
+
 }
 
 .area-button {
 	display: inline-block;
 }
 
-input{
+input {
 	padding: 10px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	flex: 1;
 }
+
 .header-input {
 	margin-bottom: 2px;
 }
 
-.input{
+.input {
 	display: flex;
 }
 
-button.button-register{
+button.button-register {
 	padding: 10px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	flex: 1;
 	background-color: #4caf50;
 	color: white;
-	
+
 }
-button.button-login{
+
+button.button-login {
 	margin-top: 18px;
 	padding: 10px;
 	border: 1px solid #ccc;
@@ -124,5 +126,28 @@ button.button-login{
 	flex: 1;
 	background-color: #4caf50;
 	color: white;
-	
+
+}
+
+.line {
+	border-bottom: 1px solid;
+	border-bottom: 1px solid;
+	border-color: rgba(58, 57, 57, 0.288);
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.header-todo {
+	display: inline-block;
+}
+
+.button-logout {
+	height: fit-content;
+	background-color: red;
 }
