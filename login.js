@@ -15,7 +15,9 @@ function Login() {
   Login.prototype.checkLogin = function () {
     const storedUser = localStorage.getItem('loggedInUser');
     if (storedUser) {
+      if (storedUser.useId !== null) {
         window.location.href = './views/todoList.html';
+      }
     }
   };
   Login.prototype.login = function () {
