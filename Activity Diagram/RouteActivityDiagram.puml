@@ -2,55 +2,155 @@
 title Router & Controller process
 |User|
 start
-:Request;
+:User choose create task;
+|Client side|
+:Send request to server side;
 |Router|
-:Check pathname;
+:Check hostname;
 if (exist?) then (no)
     |Router|
     :Send error 404 Not Found;
 else (yes)
     |Router|
-    
-    :Check method;
-    if (Valid?) then (No)
-        :Send error 405 Method Not Allowed;
-        |User|
-    else (Yes)
+    :Check pathname;
+    if (exist?) then (no)
         |Router|
-        :Send request to Controller;
-        |Controller|
-        :Processing|
-        :Send response;
-        |Router|
-        :Receive response from controller;
-        :Send response;
-        |User|
+        :Send error 404 Not Found;
+    else (yes)
+        :Check method;
+        if (POST?) then (No)
+            :Send error 405 Method Not Allowed;
+            |User|
+        else (Yes)
+            |Router|
+            :Send request to Controller;
+            |Controller|
+            :Check input;
+            if (valid?) then (yes)
+                :Create task;
+                :Send response 201 Created;
+            else (no)
+                |Controller|
+                :Send error 400 Bad Request;
+            endif
+            |Router|
+            :Receive response from controller;
+        endif           
     endif
 endif
-:Receive response from router;
+:Send response;
+|Client side|
+:Receive response from Server side;
+:Show result;
 stop
 
 @enduml
 
+
 @startuml "Activity diagram"
-title Controller - Update task
+title Router & Controller process
 |User|
 start
-:request;
+:User choose create task;
+|Client side|
+:Send request to server side;
 |Router|
-:Handle request from user;
-:Send request to controller;
-|Controller|
-:Check input valid;
-if (Content field not null) then (yes)
-    if(type of content field is string and \n type of check done field is bool) then (yes)
-        if(Content Content field changed) then (yes)
-        :Update content;
-        :Send sucess
+:Check hostname;
+if (exist?) then (no)
+    |Router|
+    :Send error 404 Not Found;
+else (yes)
+    |Router|
+    :Check pathname;
+    if (/tasks?) then (no)
+        |Router|
+        if (/user?) then (no)
+        |Router|
+        :Send error 404 Not Found;
+        else (yes)
+        :Luồng hoạt động tương tự bên task (yes);
+        endif
+    else (yes)
+        :Check method;
+        if (POST?) then (No)
+            
+            if (Get?) then (No)
+            :Send error 405 Method Not Allowed;
+            else (Yes)
+            :Luồng giống POST (yes);
+            endif
+            |User|
+        else (Yes)
+            |Router|
+            :Send request to Controller;
+            |Controller|
+            :Check input;
+            if (valid?) then (yes)
+                :Create task;
+                :Send response 201 Created;
+            else (no)
+                |Controller|
+                :Send error 400 Bad Request;
+            endif
+            |Router|
+            :Receive response from controller;
+        endif           
+    endif
 endif
-:Send response to Router;
-|Router|
-:Send response to user;
+:Send response;
+|Client side|
+:Receive response from Server side;
+:Show result;
 stop
 
+@enduml
+
+
+@startuml "Activity diagram"
+title Router & Controller process
+|User|
+start
+:User choose create task;
+|Client side|
+:Send request to server side;
+|Main Router|
+:Check hostname;
+if (exist?) then (no)
+    |Main Router|
+    :Send error 404 Not Found;
+else (yes)
+    |Main Router|
+    :Check pathname;
+    if (exist?) then (no)
+        :Send error 404 Not Found;
+    else (yes)
+        :Send request to pathname route;
+        |Pathname Router|
+        :Check method;
+        :Check method;
+        if (valid?) then (No)
+            :Send error 405 Method Not Allowed;
+        else (yes)
+            :Send request to controller;
+            |Controller|
+            :Check input;
+        if (valid?) then (yes)
+            :Processing;
+            :Send response 201 Created;
+        else (no)
+            :Send error 400 Bad Request;
+        endif
+    |Pathname Router|
+    :Receive response from controller;
+    endif
+    :Send response to Main Router;
+    |Main Router|
+    :Receive response from Pathname Router;
+    :Send response to Client Side;
+    endif
+endif  
+|Client side|
+    :Receive response from Server side;
+    :Show result;
+stop
 @enduml
