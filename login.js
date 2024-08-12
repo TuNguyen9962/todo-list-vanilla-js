@@ -13,7 +13,8 @@ function Login() {
   };
   
   Login.prototype.checkLogin = function () {
-    const storedUser = localStorage.getItem('loggedInUser');
+    const storedUser = sessionStorage.getItem('loggedInUser');
+    // const storedUser = localStorage.getItem('loggedInUser');
     if (storedUser) {
       if (storedUser.useId !== null) {
         window.location.href = './views/todoList.html';
@@ -35,8 +36,8 @@ function Login() {
         if (user.password == passWord) {
             
             //Lưu dữ liệu thông tin người dùng trên loggedInUser
-            localStorage.setItem('loggedInUser', JSON.stringify(user));
-
+            // localStorage.setItem('loggedInUser', JSON.stringify(user));
+            sessionStorage.setItem('loggedInUser', JSON.stringify(user));
             // Chuyển màn hình
             window.location.href = './views/todoList.html';
         } else {
