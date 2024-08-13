@@ -23,8 +23,7 @@ TodoApp.prototype.checkLogin = function () {
   // const storedUser = localStorage.getItem('loggedInUser');
   if (storedUser) {
     if (storedUser.useId === null) {
-      sessionStorage.removeItem('loggedInUser');
-      // localStorage.removeItem('loggedInUser');
+      localStorage.removeItem('loggedInUser');
       window.location.href = '../index.html';
     }
   }
@@ -48,7 +47,7 @@ TodoApp.prototype.addOrEditTodo = function () {
   // const storedUser = localStorage.getItem('loggedInUser');
   const storedUser = sessionStorage.getItem('loggedInUser');
   const user = JSON.parse(storedUser);
-  const userID = parseInt(user.useId, 10);
+  const userID = parseInt(user.userId, 10);
   const taskName = this.todoNameInput.value.trim();
   const taskID = generateUID()
   console.log(taskID)
@@ -80,7 +79,7 @@ TodoApp.prototype.renderList = function () {
       this.todoListData = JSON.parse(todoList)
     }
     const user = JSON.parse(storedUser);
-    const userID = parseInt(user.useId, 10);
+    const userID = parseInt(user.userId, 10);
 
     const filterValue = this.filterInput.value;
 
@@ -167,5 +166,12 @@ TodoApp.prototype.checkTodo = function (taskID) {
   localStorage.setItem('todoList', JSON.stringify(this.todoListData));
   this.renderList();
 };
+
+TodoApp.prototype.newUser = function () {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const email = document.getElementById('email').value.trim();
+  
+}
 
 const app = new TodoApp();

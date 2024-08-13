@@ -1,11 +1,11 @@
 function Login() {
     this.accountData = [
-      { useId: 1 ,username: 'admin', password: 'admin123' },
-      { useId: 2 ,username: 'tunguyen123', password: '123123' },
+      { userId: 1 ,username: 'admin', password: 'admin123' },
+      { userId: 2 ,username: 'tunguyen123', password: '123123' },
     ];
-   
-    this.useNameInput = document.getElementById('useName');
-    this.passWordInput = document.getElementById('passWord');
+
+    this.usernameInput = document.getElementById('username');
+    this.passwordInput = document.getElementById('password');
     this.loginButton = document.getElementById('login');
   
     this.loginButton.addEventListener('click', this.login.bind(this));
@@ -16,7 +16,7 @@ function Login() {
     const storedUser = sessionStorage.getItem('loggedInUser');
     // const storedUser = localStorage.getItem('loggedInUser');
     if (storedUser) {
-      if (storedUser.useId !== null) {
+      if (storedUser.userId !== null) {
         window.location.href = './views/todoList.html';
       }
     }
@@ -25,21 +25,21 @@ function Login() {
 
     localStorage.setItem('accountData',JSON.stringify(this.accountData));
 
-    const useName = this.useNameInput.value
-    const passWord = this.passWordInput.value
-    const user = this.accountData.find(account => account.username === useName);
+    const username = this.usernameInput.value
+    const password = this.passwordInput.value
+    const user = this.accountData.find(account => account.username === username);
     if (user === undefined) {
         alert('Account does not exist');
         console.log("Account does not exist")
     }
     else {
-        if (user.password == passWord) {
+        if (user.password == password) {
             
             //Lưu dữ liệu thông tin người dùng trên loggedInUser
             // localStorage.setItem('loggedInUser', JSON.stringify(user));
             sessionStorage.setItem('loggedInUser', JSON.stringify(user));
             // Chuyển màn hình
-            window.location.href = './views/todoList.html';
+            window.location.href = '../todoList/index.html';
         } else {
             alert('Wrong password');
             console.log("Wrong password")
