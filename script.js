@@ -21,7 +21,8 @@ function checkAccountOnLogin(accountData, username, password) {
     } else {
       if (user.password == password) {
           sessionStorage.setItem('loggedInUser', JSON.stringify(user));
-          window.location.href = './index.html';
+          alert('Login successful')
+          window.location.href = './views/todoList/index.html';
       } else {
           alert('Wrong password');
           console.log("Wrong password")
@@ -36,11 +37,11 @@ function checkAccountOnLogin(accountData, username, password) {
 Login.prototype.checkLogin = function () {
   const storedUser = sessionStorage.getItem('loggedInUser');
   // const storedUser = localStorage.getItem('loggedInUser');
-  if (storedUser) {
-    if (storedUser.userId !== null) {
-      window.location.href = './index.html';
-    }
-  }
+  // if (storedUser) {
+  //   if (storedUser.userId !== null) {
+      // window.location.href = './index.html';
+  //   }
+  // }
 };
 Login.prototype.login = function () {
   // localStorage.setItem('accountData',JSON.stringify(this.accountData));
@@ -50,7 +51,6 @@ Login.prototype.login = function () {
 
   if (validateEmail(username)) {
     checkAccountOnLogin(accountData, username, password)
-    alert('Login successful')
   } else {
     alert('Invalid email format');
   }

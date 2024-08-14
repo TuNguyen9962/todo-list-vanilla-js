@@ -1,8 +1,8 @@
 function TodoApp() {
   this.todoListData = [
-    { taskId: '1', userId: 1, name: 'Todo 1', isDone: true },
-    { taskId: '2', userId: 2, name: 'Todo 2', isDone: false },
-    { taskId: '3', userId: 1, name: 'Làm bài tập về nhà nhứ 3 trong tuần', isDone: false },
+    // { taskId: '1', userId: 1, name: 'Todo 1', isDone: true },
+    // { taskId: '2', userId: 2, name: 'Todo 2', isDone: false },
+    // { taskId: '3', userId: 1, name: 'Làm bài tập về nhà nhứ 3 trong tuần', isDone: false },
   ];
   this.editingIndex = -1;
   this.todoNameInput = document.getElementById('task-name');
@@ -20,16 +20,15 @@ function TodoApp() {
 
 TodoApp.prototype.checkLogin = function () {
   const storedUser = sessionStorage.getItem('loggedInUser');
-  // const storedUser = localStorage.getItem('loggedInUser');
-  if (storedUser) {
-    if (storedUser.useId === null) {
-      localStorage.removeItem('loggedInUser');
-      window.location.href = '../index.html';
-    }
-  }
-  else {
-    window.location.href = '../index.html';
-  }
+  // // const storedUser = localStorage.getItem('loggedInUser');
+  // if (storedUser) {
+  //   if (storedUser.userId === null) {
+  //     localStorage.removeItem('loggedInUser');
+  //     window.location.href = '../index.html';
+  //   }
+  // }else {
+  //   window.location.href = '../index.html';
+  // }
 };
 
 TodoApp.prototype.logout = function () {

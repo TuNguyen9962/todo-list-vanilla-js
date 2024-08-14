@@ -28,12 +28,12 @@ function checkUserOnRegister(username, password, repeatPassword) {
 
     alert('Registration successful! You can now log in.')
     console.log('Registration successful')
+    window.location.href = '../../index.html';
   
     this.usernameInput.value = '';
     this.passwordInput.value = '';
     this.repeatPasswordInput.value = '';
 
-    window.location.href = '../../index.html';
   }
 }
 
