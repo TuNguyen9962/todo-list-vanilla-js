@@ -1,5 +1,3 @@
-import generateUID from '../../helpers/utils'
-
 function Register() {
   this.usernameInput = document.getElementById('username');
   this.passwordInput = document.getElementById('password');
@@ -9,11 +7,7 @@ function Register() {
   this.registerButton.addEventListener('click', this.register.bind(this));
 }
 
-Register.prototype.register = function () { 
-  const username = this.usernameInput.value
-  const password = this.passwordInput.value
-  const repeatPassword = this.repeatPasswordInput.value
-
+function checkUserOnRegister(username, password, repeatPassword) {
   if (password !== repeatPassword) {
     alert('Passwords do not match')
     console.log('Passwords do not match')
@@ -23,9 +17,8 @@ Register.prototype.register = function () {
       password,
       userId: generateUID()
     }
-
-    const accountData = localStorage.getItem('accountData');
-    if (accountData) {
+    let accountData = localStorage.getItem('accountData');
+    if (accountData && accountData.length) {
       accountData = JSON.parse(accountData);
     } else {
       accountData = [];
@@ -40,7 +33,21 @@ Register.prototype.register = function () {
     this.passwordInput.value = '';
     this.repeatPasswordInput.value = '';
 
-    window.location.href = '../todoList/index.html';
+    window.location.href = '../../index.html';
   }
 }
 
+Register.prototype.register = function () { 
+  const username = this.usernameInput.value
+  const password = this.passwordInput.value
+  const repeatPassword = this.repeatPasswordInput.value
+
+  if (validateEmail(username)) {
+    checkUserOnRegister(username, password, repeatPassword)
+  } else {
+    alert('Invalid email address')
+    console.log('Invalid email address')
+  }
+}
+
+  const app = new Register();

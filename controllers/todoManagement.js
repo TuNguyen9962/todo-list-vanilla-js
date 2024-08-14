@@ -70,7 +70,6 @@ TodoApp.prototype.addOrEditTodo = function () {
 
 TodoApp.prototype.renderList = function () {
   const storedUser = sessionStorage.getItem('loggedInUser');
-  // const storedUser = localStorage.getItem('loggedInUser');
   const todoList = localStorage.getItem('todoList')
 
   if (storedUser) {
@@ -166,12 +165,5 @@ TodoApp.prototype.checkTodo = function (taskID) {
   localStorage.setItem('todoList', JSON.stringify(this.todoListData));
   this.renderList();
 };
-
-TodoApp.prototype.newUser = function () {
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value.trim();
-  const email = document.getElementById('email').value.trim();
-  
-}
 
 const app = new TodoApp();
