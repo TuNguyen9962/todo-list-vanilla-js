@@ -151,3 +151,16 @@ button.button-login {
 	height: fit-content;
 	background-color: red;
 }
+
+div.remember {
+  
+	margin-top: 10px;
+}
+
+
+
+.remember label {
+	display: inline-block;
+	font-size: 14px;
+	margin: auto
+}

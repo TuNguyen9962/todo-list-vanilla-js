@@ -19,32 +19,55 @@ function TodoApp() {
 }
 
 TodoApp.prototype.checkLogin = function () {
+  // debugger
   const storedUser = sessionStorage.getItem('loggedInUser');
-  // // const storedUser = localStorage.getItem('loggedInUser');
-  // if (storedUser) {
-  //   if (storedUser.userId === null) {
-  //     localStorage.removeItem('loggedInUser');
-  //     window.location.href = '../index.html';
-  //   }
-  // }else {
-  //   window.location.href = '../index.html';
-  // }
+  if (storedUser) {
+    if (storedUser.useId === null) {
+      localStorage.removeItem('loggedInUser');
+      window.location.href = '../../index.html';
+      console.log('session')
+    }
+  }
+  else {
+    const storedUserLocal = localStorage.getItem('loggedInUser');
+    if (storedUserLocal) {
+      if (storedUserLocal.useId === null) {
+        localStorage.removeItem('loggedInUser');
+        window.location.href = '../../index.html';
+        console.log('local')
+      }
+    }
+  }
 };
 
 TodoApp.prototype.logout = function () {
   sessionStorage.removeItem('loggedInUser');
-  // localStorage.removeItem('loggedInUser');
-  console.log("hi")
+  localStorage.removeItem('loggedInUser');
   this.renderList();
 };
-
+TodoApp.prototype.getUser = function () {
+  const storedUser = sessionStorage.getItem('loggedInUser');
+  if (storedUser) {
+    if (storedUser.useId !== null) {
+      return storedUser;
+    }
+  }
+  else {
+    const storedUserLocal = localStorage.getItem('loggedInUser');
+    if (storedUserLocal) {
+      if (storedUserLocal.useId !== null) {
+        return storedUserLocal;
+      }
+    }
+  }
+}
 TodoApp.prototype.addOrEditTodo = function () {
   this.checkLogin()
   function generateUID() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
   }
-  // const storedUser = localStorage.getItem('loggedInUser');
-  const storedUser = sessionStorage.getItem('loggedInUser');
+
+  const storedUser = this.getUser();
   const user = JSON.parse(storedUser);
   const userID = parseInt(user.userId, 10);
   const taskName = this.todoNameInput.value.trim();
@@ -68,7 +91,7 @@ TodoApp.prototype.addOrEditTodo = function () {
 };
 
 TodoApp.prototype.renderList = function () {
-  const storedUser = sessionStorage.getItem('loggedInUser');
+  const storedUser = this.getUser();
   const todoList = localStorage.getItem('todoList')
 
   if (storedUser) {
@@ -106,7 +129,7 @@ TodoApp.prototype.renderList = function () {
     });
   } else {
     // Chuyển màn hình tới login
-    window.location.href = '../index.html';
+    window.location.href = '../../index.html';
   }
 
 };
