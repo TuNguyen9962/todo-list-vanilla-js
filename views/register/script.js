@@ -5,7 +5,18 @@ function Register() {
 
   this.registerButton = document.getElementById('register');
   this.registerButton.addEventListener('click', this.register.bind(this));
+  this.checkLogin()
 }
+
+Register.prototype.checkLogin = function () {
+  const storedUser = localStorage.getItem('loggedInUser');
+    if (storedUser) {
+      if (storedUser.userId !== null) {
+        window.location.href = '../todoList/index.html';
+        sessionStorage.removeItem('loggedInUser')
+      }
+    }
+};
 
 function checkUserOnRegister(username, password, repeatPassword) {
   if (password !== repeatPassword) {
