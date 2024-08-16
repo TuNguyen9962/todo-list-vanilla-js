@@ -69,14 +69,18 @@ TodoApp.prototype.addOrEditTodo = function () {
 
   const storedUser = this.getUser();
   const user = JSON.parse(storedUser);
-  const userID = parseInt(user.userId, 10);
   const taskName = this.todoNameInput.value.trim();
-  const taskID = generateUID()
+  const taskID = generateUID();
   console.log(taskID)
 
   if (taskName) {
     if (this.editingIndex === -1) {
-      this.todoListData.push({ taskId: taskID, userId: userID, name: taskName, isDone: false });
+      this.todoListData.push({
+        taskId: taskID,
+        userId: user.userId,
+        name: taskName,
+        isDone: false
+      });
 
     } else {
       this.todoListData[this.editingIndex].name = taskName;
@@ -92,6 +96,7 @@ TodoApp.prototype.addOrEditTodo = function () {
 
 TodoApp.prototype.renderList = function () {
   const storedUser = this.getUser();
+  // debugger
   const todoList = localStorage.getItem('todoList')
 
   if (storedUser) {
@@ -100,8 +105,7 @@ TodoApp.prototype.renderList = function () {
       this.todoListData = JSON.parse(todoList)
     }
     const user = JSON.parse(storedUser);
-    const userID = parseInt(user.userId, 10);
-
+    const userID = user.userId
     const filterValue = this.filterInput.value;
 
     // lọc todo theo người dùng
@@ -131,7 +135,6 @@ TodoApp.prototype.renderList = function () {
     // Chuyển màn hình tới login
     window.location.href = '../../index.html';
   }
-
 };
 
 TodoApp.prototype.editTodo = function (taskID) {
