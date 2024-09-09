@@ -19,15 +19,19 @@ Register.prototype.checkLogin = function () {
 };
 
 function checkUserOnRegister(username, password, repeatPassword) {
+  const url = 'http://localhost:8080/api/users';
+  const method = 'POST';
+
   if (password !== repeatPassword) {
-    alert('Passwords do not match')
-    console.log('Passwords do not match')
+    alert('Passwords do not match');
+    console.log('Passwords do not match');
   } else {
     const newUser = {
       username,
       password,
       userId: generateUID()
-    }
+    };
+
     let accountData = localStorage.getItem('accountData');
     if (accountData && accountData.length) {
       accountData = JSON.parse(accountData);
@@ -35,18 +39,42 @@ function checkUserOnRegister(username, password, repeatPassword) {
       accountData = [];
     }
     accountData.push(newUser);
-    localStorage.setItem('accountData', JSON.stringify(accountData));
+    let httpData = JSON.stringify(accountData);
+    localStorage.setItem('accountData', httpData);
 
-    alert('Registration successful! You can now log in.')
-    console.log('Registration successful')
-    window.location.href = '../../index.html';
-  
-    this.usernameInput.value = '';
-    this.passwordInput.value = '';
-    this.repeatPasswordInput.value = '';
+    // Create a new XMLHttpRequest
+    const xhr = new XMLHttpRequest();
 
+    // Set up the request
+    xhr.open(method, url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    // Handle the response
+    xhr.onload = function () {
+      if (xhr.status === 200 || xhr.status === 201) {
+        alert('Registration successful! You can now log in.');
+        console.log('Registration successful');
+        window.location.href = '../../index.html';
+
+        this.usernameInput.value = '';
+        this.passwordInput.value = '';
+        this.repeatPasswordInput.value = '';
+      } else {
+        console.error('Error:', xhr.status, xhr.responseText);
+      }
+    };
+
+    // Handle network errors
+    xhr.onerror = function () {
+      console.error('Network Error');
+    };
+
+    // Send the request with the user data
+    xhr.send(JSON.stringify(newUser));
   }
 }
+
+// Usage example
 
 Register.prototype.register = function () { 
   const username = this.usernameInput.value
