@@ -95,7 +95,26 @@ TodoApp.prototype.addOrEditTodo = function () {
 };
 
 TodoApp.prototype.renderList = function () {
+  const url = 'http://localhost:8080/api/tasks';
+  const method = 'GET';
   const storedUser = this.getUser();
+  const xhr = new XMLHttpRequest();
+  xhr.open( method, url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('Authorization', '123456789');
+
+  // xhr.withCredentials = true;
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        console.log('User data', response);
+      } else {
+        console.error('Error:', xhr.statusText);
+      }
+    }
+  };
+  xhr.send();
   // debugger
   const todoList = localStorage.getItem('todoList')
 
